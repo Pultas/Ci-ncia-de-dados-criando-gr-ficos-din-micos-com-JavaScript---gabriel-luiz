@@ -1,20 +1,38 @@
-const url = 'https://raw.githubusercontent.com/guilhermeonrails/api/main/dados-globais.json'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uso das Redes Sociais</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Uso das Redes Sociais em 2024</h1>
+    <canvas id="socialMediaChart"></canvas>
 
-async function vizualizarInformacoesGlobais() {
-    const res = await fetch(url)
-    const dados = await res.json()
-    const pessoasConectadas = (dados.total_pessoas_conectadas / 1e9)
-    const pessoasNoMundo = (dados.total_pessoas_mundo / 1e9)
-    const horas = parseInt(dados.tempo_medio)
-    const minutos = Math.round((dados.tempo_medio - horas) * 100)
-    const porcentagemConectada = ((pessoasConectadas / pessoasNoMundo ) * 100).toFixed(2)
-
-    const paragrafo = document.createElement('p')
-    paragrafo.classList.add('graficos-container__texto')
-    paragrafo.innerHTML = `Você sabia que o mundo tem <span>${pessoasNoMundo} bilhões</span> de pessoas e que aproximadamente <span>${pessoasConectadas} bilhões</span> estão conectadas em alguma rede social e passam em média <span>${horas} horas</span> e <span>${minutos} minutos</span> conectadas.<br>Isso significa que aproximadamente <span>${porcentagemConectada}%</span> de pessoas estão conectadas em alguma rede social.`
-
-    const container = document.getElementById('graficos-container')
-    container.appendChild(paragrafo)
-}
-
-vizualizarInformacoesGlobais()
+    <script>
+        const ctx = document.getElementById('socialMediaChart').getContext('2d');
+        const socialMediaChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Facebook', 'Instagram', 'Twitter', 'TikTok', 'LinkedIn'],
+                datasets: [{
+                    label: 'Usuários (milhões)',
+                    data: [2300, 1800, 300, 1500, 900],
+                    backgroundColor: ['#3b5998', '#E1306C', '#1DA1F2', '#69C9D0', '#0077B5'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Usuários de Redes Sociais em Milhões (2024)'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
